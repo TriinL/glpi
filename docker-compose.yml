@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   glpi:
-    image: diouxx/glpi
+    image: glpi10-test
     container_name : glpi
     hostname: glpi
     ports:
