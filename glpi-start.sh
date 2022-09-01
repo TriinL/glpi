@@ -34,7 +34,8 @@ else
 fi
 
 #Modification du vhost par défaut
-echo -e "<VirtualHost *:80>\n\tDocumentRoot /var/www/html/glpi\n\n\t<Directory /var/www/html/glpi>\n\t\tAllowOverride All\n\t\tOrder Allow,Deny\n\t\tAllow from all\n\t</Directory>\n\n\tErrorLog /var/log/apache2/error-glpi.log\n\tLogLevel warn\n\tCustomLog /var/log/apache2/access-glpi.log combined\n</VirtualHost>" > /etc/apache2/sites-available/000-default.conf
+echo -e '<VirtualHost *:80>\n\tDocumentRoot /var/www/html/glpi/\n\tServerName glpi.omniphar.com\n\tServerAlias assistance.omniphar.com\n\t###\n\t<If "%{HTTP_USER_AGENT} =~ /.*Windows.*/">\n\tAuthType Kerberos\n\t\tAuthName "Kerberos Login Intranet HTTPS"\n\t\tKrbAuthRealms OMNIPHAR.LAN\n\t\tKrbServiceName HTTP/glpi.omniphar.com\n\t\tKrb5Keytab /etc/kerberos.keytab\n\t\tKrbMethodNegotiate On\n\t\tKrbMethodK5Passwd On\n\t\tKrbSaveCredentials On\n\t\trequire valid-user\n\t\t</If>\n\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+echo -e "[libdefaults]\n\tdefault_realm = OMNIPHAR.LAN\n\tdns_lookup_realm = true\n\tdns_lookup_kdc = false\n\tdefault_keytab_name = FILE:/etc/kerberos.keytab\n\tkdc_timesync = 1\n\tccache_type = 4\n\tforwardable = true\n\tproxiable = true\n\tfcc-mit-ticketflags = true\n\n[realms]\n\tOMNIPHAR.LAN = {\n\t\tkdc = SRV-AD2016.OMNIPHAR.LAN\n\t\tkdc = OMNI-AD-001.OMNIPHAR.LAN\n\t\tadmin_server = SRV-AD2016.OMNIPHAR.LAN\n\t}\n[domain_realm]\n\t.omniphar.com = OMNIPHAR.LAN\n\tomniphar.com = OMNIPHAR.LAN\n\n\t.omniphar.lan = OMNIPHAR.LAN\n\tomniphar.lan = OMNIPHAR.LAN" > /etc/krb5.conf
 
 #Add scheduled task by cron and enable
 echo "*/2 * * * * www-data /usr/bin/php /var/www/html/glpi/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
