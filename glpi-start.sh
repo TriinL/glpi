@@ -34,7 +34,7 @@ else
 fi
 
 #Modification du vhost par défaut
-echo -e '<VirtualHost *:80>\n\tDocumentRoot /var/www/html/glpi/\n\tServerName glpi-test.omniphar.com\n\tServerAlias assistance.omniphar.com\n\tRedirect / https://glpi.omniphar.com/\n\t###\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>\n<VirtualHost *:80>\n\tDocumentRoot /var/www/html/glpi/\n\tServerName agent.omniphar.com\n\t#Redirect / https://agent.omniphar.com\n\t###\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+echo -e '<VirtualHost *:80>\n\tDocumentRoot /var/www/html/glpi/\n\tServerName glpi-test.omniphar.com\n\t#ServerAlias assistance.omniphar.com\n\t#Redirect / https://glpi.omniphar.com/\n\t###\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 #Add scheduled task by cron and enable
 echo "*/2 * * * * www-data /usr/bin/php /var/www/html/glpi/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
