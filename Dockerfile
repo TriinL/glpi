@@ -14,6 +14,7 @@ apache2 \
 php7.4 \
 php7.4-mysql \
 php7.4-ldap \
+php7.3-ldap \
 php7.4-xmlrpc \
 php7.4-imap \
 curl \
@@ -30,6 +31,7 @@ cron \
 wget \
 ca-certificates \
 jq \
+libaprutil1-ldap \
 libldap-2.4-2 \
 libldap-common \
 libsasl2-2 \
